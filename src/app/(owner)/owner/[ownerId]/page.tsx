@@ -45,10 +45,10 @@ export default async function OwnerDashboard({ params }: { params: Promise<{ own
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold font-headline">Welcome, {owner.name}!</h1>
-        <Link href={`/ owner / ${owner.id}/items`}>
+        <Link href={`/owner/${owner.id}/items`}>
           <Button>Manage Items</Button>
-        </Link >
-      </div >
+        </Link>
+      </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <StatCard

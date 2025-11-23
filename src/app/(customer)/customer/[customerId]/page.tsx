@@ -1,5 +1,7 @@
+'use client';
+
+import { useState } from 'react';
 import { items, shops, users } from '@/lib/data';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import ProductCard from '@/components/product-card';
 import { Item } from '@/lib/types';
 import ProductSearch from '@/components/product-search';
@@ -16,7 +18,7 @@ function ProductGrid({ products }: { products: Item[] }) {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
       {products.map((item) => (
         <ProductCard key={item.id} item={item} />
       ))}
@@ -24,7 +26,8 @@ function ProductGrid({ products }: { products: Item[] }) {
   );
 }
 
-export default async function CustomerDashboard() {
+export default function CustomerDashboard() {
+  const [selectedShop, setSelectedShop] = useState('all');
   const allItems = items;
   const allShops = shops;
 
@@ -37,26 +40,35 @@ export default async function CustomerDashboard() {
 
       <ProductSearch products={allItems} />
 
-      <Tabs defaultValue="all" className="w-full">
-        <div className="flex justify-center mb-6">
-          <TabsList className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6">
-            <TabsTrigger value="all">All Shops</TabsTrigger>
-            {allShops.map((shop) => (
-              <TabsTrigger key={shop.id} value={shop.id}>
-                {shop.name}
-              </TabsTrigger>
-            ))}
-          </TabsList>
+      {/* Shop Selection - Compact Bento Grid */}
+      <div className="mb-6">
+        <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+          <button
+            onClick={() => setSelectedShop('all')}
+            className={`px-4 py-2 rounded-lg whitespace-nowrap transition-all ${selectedShop === 'all'
+              ? 'bg-primary text-primary-foreground'
+              : 'bg-muted hover:bg-muted/80'
+              }`}
+          >
+            All Shops
+          </button>
+          {allShops.map((shop) => (
+            <button
+              key={shop.id}
+              onClick={() => setSelectedShop(shop.id)}
+              className={`px-4 py-2 rounded-lg whitespace-nowrap transition-all ${selectedShop === shop.id
+                ? 'bg-primary text-primary-foreground'
+                : 'bg-muted hover:bg-muted/80'
+                }`}
+            >
+              {shop.name}
+            </button>
+          ))}
         </div>
-        <TabsContent value="all">
-          <ProductGrid products={allItems} />
-        </TabsContent>
-        {allShops.map((shop) => (
-          <TabsContent key={shop.id} value={shop.id}>
-            <ProductGrid products={allItems.filter((item) => item.shopId === shop.id)} />
-          </TabsContent>
-        ))}
-      </Tabs>
+      </div>
+
+      {/* Products */}
+      <ProductGrid products={selectedShop === 'all' ? allItems : allItems.filter((item) => item.shopId === selectedShop)} />
     </div>
   );
 }

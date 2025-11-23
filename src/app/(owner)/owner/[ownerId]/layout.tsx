@@ -11,7 +11,19 @@ import {
   SidebarInset,
 } from "@/components/ui/sidebar";
 import { Package, LayoutDashboard, Settings } from "lucide-react";
-import Link from "next/link";
+import Link from 'next/link';
+import { ReactNode } from 'react';
+import { users } from '@/lib/data';
+import { redirect } from 'next/navigation';
+import { Home, Package, Settings, LogOut, Menu } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { usePathname, useParams } from "next/navigation";
 
 import { UserRole } from "@/lib/types";
@@ -26,54 +38,19 @@ export default function OwnerLayout({
   const pathname = usePathname();
 
   return (
-    <SidebarProvider>
-      <div className="min-h-screen flex flex-col">
-        <AppHeader userId={ownerId} userRole={UserRole.ShopOwner} />
-        <div className="flex flex-1">
-          <Sidebar className="top-16 h-[calc(100vh-4rem)]">
-            <SidebarContent>
-              <SidebarMenu>
-                <SidebarMenuItem>
-                  <SidebarMenuButton
-                    asChild
-                    isActive={pathname === `/owner/${ownerId}`}
-                  >
-                    <Link href={`/owner/${ownerId}`}>
-                      <LayoutDashboard />
-                      Dashboard
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-                <SidebarMenuItem>
-                  <SidebarMenuButton
-                    asChild
-                    isActive={pathname.includes(`/owner/${ownerId}/items`)}
-                  >
-                    <Link href={`/owner/${ownerId}/items`}>
-                      <Package />
-                      Manage Items
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-                <SidebarMenuItem>
-                  <SidebarMenuButton
-                    asChild
-                    isActive={pathname.includes(`/owner/${ownerId}/settings`)}
-                  >
-                    <Link href={`/owner/${ownerId}/settings`}>
-                      <Settings />
+    <Settings />
                       Shop Settings
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              </SidebarMenu>
-            </SidebarContent>
-          </Sidebar>
-          <SidebarInset>
-            <main className="flex-grow p-4 md:p-6">{children}</main>
-          </SidebarInset>
-        </div>
-      </div>
-    </SidebarProvider>
+                    </Link >
+                  </SidebarMenuButton >
+                </SidebarMenuItem >
+              </SidebarMenu >
+            </SidebarContent >
+          </Sidebar >
+    <SidebarInset>
+      <main className="flex-grow p-4 md:p-6">{children}</main>
+    </SidebarInset>
+        </div >
+      </div >
+    </SidebarProvider >
   );
 }

@@ -29,7 +29,7 @@ export default function ProductCard({ item }: ProductCardProps) {
   return (
     <Card className="flex flex-col overflow-hidden h-full shadow-md hover:shadow-xl transition-shadow duration-300">
       <CardHeader className="p-0">
-        <div className="h-48 w-full relative">
+        <div className="h-32 md:h-48 w-full relative">
           <Image
             src={item.imageUrl}
             alt={item.name}
