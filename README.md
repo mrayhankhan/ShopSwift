@@ -39,9 +39,22 @@ ShopSwift is a modern e-commerce platform built with Next.js, Tailwind CSS, and 
     ```
 4.  Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Deployment:
+## Deployment
 
-This project is configured for deployment on GitHub Pages.
+### Option 1: Vercel (Recommended)
+This project uses Server Actions and requires a platform that supports SSR.
 
-1.  Push changes to the `main` branch.
-2.  The GitHub Actions workflow will automatically build and deploy the site to the `gh-pages` branch.
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/mrayhankhan/ShopSwift)
+
+Or manually:
+1.  Push to GitHub
+2.  Go to [vercel.com](https://vercel.com)
+3.  Import your repository
+4.  Deploy (it auto-detects Next.js)
+
+### Option 2: Other Platforms
+-   **Netlify**: Supports Next.js with SSR
+-   **Railway**: Supports Node.js apps
+-   **Render**: Supports web services
+
+**Note:** GitHub Pages is not supported because this app uses Server Actions which require a Node.js runtime.
