@@ -13,5 +13,5 @@ type Props = {
 
 export default async function CartPage({ params }: Props) {
     const { customerId } = await params;
-    return <CartPageClient customerId={customerId} />;
+    return <CartPageClient />;
 }
