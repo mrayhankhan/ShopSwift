@@ -39,7 +39,7 @@ ShopSwift is a modern e-commerce platform built with Next.js, Tailwind CSS, and 
     ```
 4.  Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Deployment
+## Deployment:
 
 This project is configured for deployment on GitHub Pages.
 
