@@ -4,6 +4,8 @@ import { items, orders, shops, users } from '@/lib/data';
 import { IndianRupee, Package, ShoppingCart } from 'lucide-react';
 import { format } from 'date-fns';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 export async function generateStaticParams() {
   return users.filter(u => u.shopId).map((user) => ({
