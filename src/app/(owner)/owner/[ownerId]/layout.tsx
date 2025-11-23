@@ -9,7 +9,7 @@ import {
   SidebarMenuButton,
   SidebarProvider,
   SidebarInset,
-} from "@/components/ui/dropdown-menu";
+} from "@/components/ui/sidebar";
 import { Package, LayoutDashboard, Settings, LogOut, Menu } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useParams } from "next/navigation";
