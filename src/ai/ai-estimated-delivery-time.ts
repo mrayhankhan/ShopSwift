@@ -69,7 +69,7 @@ const estimateDeliveryTimeFlow = ai.defineFlow(
     inputSchema: EstimatedDeliveryTimeInputSchema,
     outputSchema: EstimatedDeliveryTimeOutputSchema,
   },
-  async (input: z.infer<typeof EstimatedDeliveryTimeInputSchema>) => {
+  async (input: EstimatedDeliveryTimeInput) => {
     const { output } = await prompt(input);
     return output!;
   }
