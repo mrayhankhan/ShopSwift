@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { items as ITEMS, users as USERS } from "@/lib/data";
 import { Button } from "@/components/ui/button";
+import { deleteItem } from "@/app/actions";
+import { IndianRupee, Trash2 } from "lucide-react";
 
 type Props = {
   params: Promise<{ ownerId: string }>;
@@ -33,6 +35,8 @@ export default async function OwnerItemsPage({ params }: Props) {
         <table className="w-full text-sm text-left">
           <thead className="bg-gray-100">
             <tr>
+              <th className="px-4 py-3">S.No</th>
+              <th className="px-4 py-3">Item ID</th>
               <th className="px-4 py-3">Image</th>
               <th className="px-4 py-3">Name</th>
               <th className="px-4 py-3">Price</th>
@@ -41,8 +45,10 @@ export default async function OwnerItemsPage({ params }: Props) {
             </tr>
           </thead>
           <tbody className="divide-y">
-            {itemsForOwner.map((item) => (
+            {itemsForOwner.map((item, index) => (
               <tr key={item.id} className="hover:bg-gray-50">
+                <td className="px-4 py-3">{index + 1}</td>
+                <td className="px-4 py-3 font-mono text-xs text-muted-foreground">{item.id}</td>
                 <td className="px-4 py-3">
                   <img
                     src={item.imageUrl}
@@ -51,22 +57,32 @@ export default async function OwnerItemsPage({ params }: Props) {
                   />
                 </td>
                 <td className="px-4 py-3 font-medium">{item.name}</td>
-                <td className="px-4 py-3">${item.price}</td>
+                <td className="px-4 py-3 flex items-center">
+                  <IndianRupee className="h-3 w-3 mr-1" />
+                  {item.price}
+                </td>
                 <td className="px-4 py-3">{item.stock}</td>
-                <td className="px-4 py-3 space-x-2">
+                <td className="px-4 py-3 space-x-2 flex items-center">
                   <Link
                     href={`/owner/${ownerId}/items/${item.id}/edit`}
                     className="text-blue-600 hover:underline"
                   >
                     Edit
                   </Link>
+                  <form action={deleteItem}>
+                    <input type="hidden" name="itemId" value={item.id} />
+                    <input type="hidden" name="ownerId" value={ownerId} />
+                    <Button variant="ghost" size="icon" type="submit" className="h-8 w-8 text-destructive">
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </form>
                 </td>
               </tr>
             ))}
 
             {itemsForOwner.length === 0 && (
               <tr>
-                <td className="px-4 py-8 text-center text-gray-500" colSpan={5}>
+                <td className="px-4 py-8 text-center text-gray-500" colSpan={7}>
                   No items yet. Click "Add Item" to create your first product.
                 </td>
               </tr>

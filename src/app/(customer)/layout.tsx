@@ -5,6 +5,8 @@ import AppHeader from '@/components/app-header';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+import { UserRole } from '@/lib/types';
+
 function ClientOnly({ children }: { children: React.ReactNode }) {
   const [hasMounted, setHasMounted] = useState(false);
 
@@ -31,7 +33,7 @@ export default function CustomerLayout({
     <CartProvider>
       <ClientOnly>
         <div className="min-h-screen flex flex-col">
-          <AppHeader userId={customerId} userRole="CUSTOMER" />
+          <AppHeader userId={customerId} userRole={UserRole.Customer} />
           <main className="flex-grow container mx-auto p-4 md:p-6">
             {children}
           </main>

@@ -50,13 +50,13 @@ export function ItemForm({ item, shopId, ownerId }: ItemFormProps) {
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     startTransition(() => {
-        const formData = new FormData();
-        Object.entries(values).forEach(([key, value]) => {
-            if (value !== undefined && value !== null) {
-                formData.append(key, String(value));
-            }
-        });
-        saveItem(formData);
+      const formData = new FormData();
+      Object.entries(values).forEach(([key, value]) => {
+        if (value !== undefined && value !== null) {
+          formData.append(key, String(value));
+        }
+      });
+      saveItem(formData);
     });
   };
 
@@ -99,7 +99,7 @@ export function ItemForm({ item, shopId, ownerId }: ItemFormProps) {
             name="price"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Price ($)</FormLabel>
+                <FormLabel>Price (₹)</FormLabel>
                 <FormControl>
                   <Input type="number" step="0.01" {...field} />
                 </FormControl>
@@ -154,8 +154,8 @@ export function ItemForm({ item, shopId, ownerId }: ItemFormProps) {
           )}
         />
         <Button type="submit" disabled={isPending}>
-            {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            {item ? 'Save Changes' : 'Add Item'}
+          {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+          {item ? 'Save Changes' : 'Add Item'}
         </Button>
       </form>
     </Form>

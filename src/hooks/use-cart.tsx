@@ -55,7 +55,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       if (existingItem) {
         const newQuantity = Math.min(existingItem.quantity + 1, item.stock);
         return prevCart.map((cartItem) =>
-          cartItem.item.id === item.id ? { ...cartItem, quantity: newQuantity } : cartItem
+          cartItem.item.id === item.id ? { ...cartItem, quantity: newQuantity, item: item } : cartItem
         );
       }
       return [...prevCart, { item, quantity: 1 }];

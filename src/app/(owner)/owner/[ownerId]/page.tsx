@@ -1,10 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { items, orders, shops, users } from '@/lib/data';
-import { DollarSign, Package, ShoppingCart, User as UserIcon } from 'lucide-react';
+import { IndianRupee, Package, ShoppingCart, User as UserIcon } from 'lucide-react';
 import { format } from 'date-fns';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
@@ -48,8 +47,8 @@ export default async function OwnerDashboard({ params }: { params: Promise<{ own
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <StatCard
           title="Total Revenue"
-          value={`$${shopOrders.reduce((acc, order) => acc + order.totalPrice, 0).toFixed(2)}`}
-          icon={DollarSign}
+          value={`${shopOrders.reduce((acc, order) => acc + order.totalPrice, 0).toFixed(2)}`}
+          icon={IndianRupee}
           description="All-time sales"
         />
         <StatCard
@@ -66,8 +65,8 @@ export default async function OwnerDashboard({ params }: { params: Promise<{ own
         />
         <StatCard
           title="Inventory Value"
-          value={`$${totalInventoryValue.toFixed(2)}`}
-          icon={DollarSign}
+          value={`${totalInventoryValue.toFixed(2)}`}
+          icon={IndianRupee}
           description="Current value of all stock"
         />
       </div>
@@ -80,21 +79,24 @@ export default async function OwnerDashboard({ params }: { params: Promise<{ own
           <Table>
             <TableHeader>
               <TableRow>
+                <TableHead>Order ID</TableHead>
                 <TableHead>Customer</TableHead>
                 <TableHead>Order Date</TableHead>
+                <TableHead>Items</TableHead>
                 <TableHead className="text-right">Amount</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {shopOrders.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={3} className="text-center">No orders yet.</TableCell>
+                  <TableCell colSpan={5} className="text-center">No orders yet.</TableCell>
                 </TableRow>
               )}
-              {shopOrders.slice(0, 5).map(order => {
+              {shopOrders.slice(0, 10).map(order => {
                 const customer = users.find(u => u.id === order.customerId);
                 return (
                   <TableRow key={order.id}>
+                    <TableCell className="font-mono text-xs">{order.id}</TableCell>
                     <TableCell>
                       <div className="flex items-center gap-2">
                         <Avatar className="h-8 w-8">
@@ -104,7 +106,19 @@ export default async function OwnerDashboard({ params }: { params: Promise<{ own
                       </div>
                     </TableCell>
                     <TableCell>{format(order.orderDate, 'PPP')}</TableCell>
-                    <TableCell className="text-right">${order.totalPrice.toFixed(2)}</TableCell>
+                    <TableCell>
+                      <div className="text-sm">
+                        {order.items.map((item, idx) => {
+                          const product = items.find(i => i.id === item.itemId);
+                          return (
+                            <div key={idx} className="text-muted-foreground">
+                              {item.quantity}x {product?.name || item.itemId}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </TableCell>
+                    <TableCell className="text-right font-bold">₹{order.totalPrice.toFixed(2)}</TableCell>
                   </TableRow>
                 );
               })}

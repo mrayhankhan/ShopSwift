@@ -2,6 +2,7 @@ import { items, shops } from '@/lib/data';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import ProductCard from '@/components/product-card';
 import { Item } from '@/lib/types';
+import ProductSearch from '@/components/product-search';
 
 function ProductGrid({ products }: { products: Item[] }) {
   if (products.length === 0) {
@@ -27,6 +28,9 @@ export default async function CustomerDashboard() {
         <h1 className="text-4xl font-bold font-headline tracking-tight">Explore Our Products</h1>
         <p className="text-muted-foreground mt-2">Find fresh groceries from all our partner shops.</p>
       </header>
+
+      <ProductSearch products={allItems} />
+
       <Tabs defaultValue="all" className="w-full">
         <div className="flex justify-center mb-6">
           <TabsList className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6">

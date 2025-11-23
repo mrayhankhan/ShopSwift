@@ -6,7 +6,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { Item } from '@/lib/types';
 import { useCart } from '@/hooks/use-cart';
 import { useToast } from '@/hooks/use-toast';
-import { ShoppingCart } from 'lucide-react';
+import { ShoppingCart, IndianRupee } from 'lucide-react';
 
 type ProductCardProps = {
   item: Item;
@@ -29,12 +29,11 @@ export default function ProductCard({ item }: ProductCardProps) {
   return (
     <Card className="flex flex-col overflow-hidden h-full shadow-md hover:shadow-xl transition-shadow duration-300">
       <CardHeader className="p-0">
-        <div className="aspect-w-4 aspect-h-3">
+        <div className="h-48 w-full relative">
           <Image
             src={item.imageUrl}
             alt={item.name}
-            width={400}
-            height={300}
+            fill
             className="object-cover"
             data-ai-hint={item.imageHint}
           />
@@ -42,12 +41,17 @@ export default function ProductCard({ item }: ProductCardProps) {
       </CardHeader>
       <CardContent className="p-4 flex-grow">
         <CardTitle className="text-lg font-semibold font-body leading-tight h-12">{item.name}</CardTitle>
-        <p className="text-2xl font-bold text-primary mt-2">${item.price.toFixed(2)}</p>
-        {isOutOfStock && <p className="text-sm text-destructive font-semibold mt-1">Out of Stock</p>}
+        <div className="flex items-center justify-between">
+          <span className="text-lg font-bold flex items-center">
+            <IndianRupee className="h-4 w-4" />
+            {item.price.toFixed(2)} <span className="text-sm font-normal text-muted-foreground ml-1">/ {item.unit}</span>
+          </span>
+          {isOutOfStock && <p className="text-sm text-destructive font-semibold mt-1">Out of Stock</p>}
+        </div>
       </CardContent>
       <CardFooter className="p-4 pt-0">
-        <Button 
-          className="w-full bg-accent text-accent-foreground hover:bg-accent/80" 
+        <Button
+          className="w-full bg-accent text-accent-foreground hover:bg-accent/80"
           onClick={handleAddToCart}
           disabled={isOutOfStock}
         >

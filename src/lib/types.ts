@@ -9,6 +9,9 @@ export type User = {
   email: string;
   role: UserRole;
   shopId?: string;
+  address?: string;
+  lat?: number;
+  lng?: number;
 };
 
 export type Shop = {
@@ -23,7 +26,8 @@ export type Shop = {
 export type Item = {
   id: string;
   name: string;
-  description: string;
+  description?: string;
+  unit: string;
   imageUrl: string;
   imageHint: string;
   price: number;
