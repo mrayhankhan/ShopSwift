@@ -1,11 +1,15 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { items, orders, shops, users } from '@/lib/data';
-import { IndianRupee, Package, ShoppingCart, User as UserIcon } from 'lucide-react';
+import { IndianRupee, Package, ShoppingCart } from 'lucide-react';
 import { format } from 'date-fns';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+
+export async function generateStaticParams() {
+  return users.filter(u => u.shopId).map((user) => ({
+    ownerId: user.id,
+  }));
+}
 
 export default async function OwnerDashboard({ params }: { params: Promise<{ ownerId: string }> }) {
   const { ownerId } = await params;
@@ -39,10 +43,10 @@ export default async function OwnerDashboard({ params }: { params: Promise<{ own
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold font-headline">Welcome, {owner.name}!</h1>
-        <Link href={`/owner/${owner.id}/items`}>
+        <Link href={`/ owner / ${owner.id}/items`}>
           <Button>Manage Items</Button>
-        </Link>
-      </div>
+        </Link >
+      </div >
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <StatCard
@@ -126,6 +130,6 @@ export default async function OwnerDashboard({ params }: { params: Promise<{ own
           </Table>
         </CardContent>
       </Card>
-    </div>
+    </div >
   );
 }

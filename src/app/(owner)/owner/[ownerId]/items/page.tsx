@@ -4,6 +4,12 @@ import { Button } from "@/components/ui/button";
 import { deleteItem } from "@/app/actions";
 import { IndianRupee, Trash2 } from "lucide-react";
 
+export async function generateStaticParams() {
+  return USERS.filter(u => u.shopId).map((user) => ({
+    ownerId: user.id,
+  }));
+}
+
 type Props = {
   params: Promise<{ ownerId: string }>;
 };

@@ -1,8 +1,14 @@
-import { items, shops } from '@/lib/data';
+import { items, shops, users } from '@/lib/data';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import ProductCard from '@/components/product-card';
 import { Item } from '@/lib/types';
 import ProductSearch from '@/components/product-search';
+
+export async function generateStaticParams() {
+  return users.map((user) => ({
+    customerId: user.id,
+  }));
+}
 
 function ProductGrid({ products }: { products: Item[] }) {
   if (products.length === 0) {

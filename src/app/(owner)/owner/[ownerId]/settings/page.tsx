@@ -9,6 +9,12 @@ import { MapPin } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { shops } from '@/lib/data';
 
+export async function generateStaticParams() {
+    return shops.map((shop) => ({
+        ownerId: shop.ownerId,
+    }));
+}
+
 type Props = {
     params: Promise<{ ownerId: string }>;
 };

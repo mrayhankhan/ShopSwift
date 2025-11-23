@@ -3,6 +3,20 @@
 import { ItemForm } from "@/components/item-form";
 import { items as ITEMS, users as USERS } from "@/lib/data";
 
+export async function generateStaticParams() {
+  const params = [];
+  for (const user of USERS.filter(u => u.shopId)) {
+    const userItems = ITEMS.filter(item => item.shopId === user.shopId);
+    for (const item of userItems) {
+      params.push({
+        ownerId: user.id,
+        itemId: item.id,
+      });
+    }
+  }
+  return params;
+}
+
 type Props = {
   params: Promise<{ ownerId: string; itemId: string }>;
 };
