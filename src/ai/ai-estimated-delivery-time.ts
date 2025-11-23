@@ -8,8 +8,8 @@
  * - EstimatedDeliveryTimeOutput - The return type for the estimateDeliveryTime function.
  */
 
-import {ai} from '@/ai/genkit';
-import {z} from 'genkit';
+import { ai } from '@/ai/genkit';
+import { z } from 'genkit';
 
 const EstimatedDeliveryTimeInputSchema = z.object({
   customerLocation: z
@@ -47,8 +47,8 @@ export async function estimateDeliveryTime(
 
 const prompt = ai.definePrompt({
   name: 'estimateDeliveryTimePrompt',
-  input: {schema: EstimatedDeliveryTimeInputSchema},
-  output: {schema: EstimatedDeliveryTimeOutputSchema},
+  input: { schema: EstimatedDeliveryTimeInputSchema },
+  output: { schema: EstimatedDeliveryTimeOutputSchema },
   prompt: `You are a delivery time estimator.
 
 You are provided with the customer location, shop location, the total value of the order, and the time of day.
@@ -69,8 +69,8 @@ const estimateDeliveryTimeFlow = ai.defineFlow(
     inputSchema: EstimatedDeliveryTimeInputSchema,
     outputSchema: EstimatedDeliveryTimeOutputSchema,
   },
-  async input => {
-    const {output} = await prompt(input);
+  async (input: z.infer<typeof EstimatedDeliveryTimeInputSchema>) => {
+    const { output } = await prompt(input);
     return output!;
   }
 );
